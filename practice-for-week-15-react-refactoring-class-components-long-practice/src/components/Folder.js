@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 
-const Headers = ({ titles, currentTab, setCurrentTab }) => {
+const Headers = ({ titles, currentTab, selectTab }) => {
   const handleClick = (e) => {
     const idx = parseInt(e.target.id);
-    setCurrentTab(idx);
+    selectTab(idx);
   }
 
   const tabs = titles.map((title, idx) => {
@@ -66,7 +66,7 @@ const Headers = ({ titles, currentTab, setCurrentTab }) => {
 const Folder = ({folders}) => {
   const [currentTab, setCurrentTab] = useState(0);
 
-  // const selectTab = (num) => setCurrentTab(num);
+  const selectTab = (num) => setCurrentTab(num);
   const titles = folders.map((folder) => folder.title);
 
   return (
@@ -76,11 +76,11 @@ const Folder = ({folders}) => {
         <Headers
           titles={titles}
           currentTab={currentTab}
-          // selectTab={selectTab}
-          setCurrentTab={setCurrentTab}
+          selectTab={selectTab}
+          // setCurrentTab={setCurrentTab}
         />
         <div className='tab-content'>
-          {folders.content}
+          {folders[currentTab].content}
         </div>
       </div>
     </section>
