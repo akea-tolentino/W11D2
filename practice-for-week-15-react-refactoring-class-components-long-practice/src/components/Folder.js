@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Headers = ({ titles, currentTab, selectTab }) => {
+
+const Headers = ({ titles, currentTab, setCurrentTab }) => {
   const handleClick = (e) => {
-    const idx = parseInt(e.target.id, 10);
-    selectTab(idx);
+    const idx = parseInt(e.target.id);
+    setCurrentTab(idx);
   }
 
   const tabs = titles.map((title, idx) => {
@@ -28,38 +29,62 @@ const Headers = ({ titles, currentTab, selectTab }) => {
   );
 }
 
-class Folder extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentTab: 0
-    };
-  }
+// class Folder extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       currentTab: 0
+//     };
+//   }
   
-  selectTab = (num) => {
-    this.setState({ currentTab: num });
-  }
+//   selectTab = (num) => {
+//     this.setState({ currentTab: num });
+//   }
   
-  render() {
-    const folder = this.props.folders[this.state.currentTab];
-    const titles = this.props.folders.map((folder) => folder.title);
+//   render() {
+//     const folder = this.props.folders[this.state.currentTab];
+//     const titles = this.props.folders.map((folder) => folder.title);
     
-    return (
-      <section className="tabs-section">
-        <h1>Tabs</h1>
-        <div className='tabs'>
-          <Headers
-            titles={titles}
-            currentTab={this.state.currentTab}
-            selectTab={this.selectTab}
-          />
-          <div className='tab-content'>
-            {folder.content}
-          </div>
+//     return (
+//       <section className="tabs-section">
+//         <h1>Tabs</h1>
+//         <div className='tabs'>
+//           <Headers
+//             titles={titles}
+//             currentTab={this.state.currentTab}
+//             selectTab={this.selectTab}
+//           />
+//           <div className='tab-content'>
+//             {folder.content}
+//           </div>
+//         </div>
+//       </section>
+//     );
+//   }
+// }
+
+const Folder = ({folders}) => {
+  const [currentTab, setCurrentTab] = useState(0);
+
+  // const selectTab = (num) => setCurrentTab(num);
+  const titles = folders.map((folder) => folder.title);
+
+  return (
+    <section className="tabs-section">
+      <h1>Tabs</h1>
+      <div className='tabs'>
+        <Headers
+          titles={titles}
+          currentTab={currentTab}
+          // selectTab={selectTab}
+          setCurrentTab={setCurrentTab}
+        />
+        <div className='tab-content'>
+          {folders.content}
         </div>
-      </section>
-    );
-  }
+      </div>
+    </section>
+  );
 }
 
 export default Folder;
